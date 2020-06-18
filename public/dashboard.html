@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        outline: none;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      h1.title {
+        background: linear-gradient(135deg, #069, blueviolet);
+        color: white;
+        padding-left: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 class="title">Dashboard</h1>
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+    />
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="js/socket.io.js"></script>
+    <script>
+      const dashboard = 23;
+      const socket = io("http://localhost:3000");
+
+      toastr.options = {
+        progressbar: true,
+      };
+      socket.on("message", function (data) {
+        console.log(data);
+        const wrap_messages = document.querySelector("#messages");
+        if (data.dashboard_id == dashboard) {
+          const { message = "", title = "", type = "success" } = data;
+          toastr[type](message, title, {
+            progressbar: true,
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

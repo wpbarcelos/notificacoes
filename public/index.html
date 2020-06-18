@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cliente</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        outline: none;
+        font-family: Arial, Helvetica, sans-serif;
+      }
+      h1.title {
+        background: linear-gradient(135deg, #069, blueviolet);
+        color: white;
+        padding-left: 10px;
+      }
+    </style>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css"
+    />
+  </head>
+  <body>
+    <h1 class="title">Cliente</h1>
+
+    <script src="https://code.jquery.com/jquery-2.2.4.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script src="js/socket.io.js"></script>
+    <script>
+      const client_id = 123;
+      const socket = io("http://localhost:3000");
+      socket.on("message", function (data) {
+        const wrap_messages = document.querySelector("#messages");
+        if (data.client_id == client_id) {
+          toastr.success(data.message);
+        }
+      });
+    </script>
+  </body>
+</html>
