@@ -35,7 +35,8 @@
       socket.on("message", function (data) {
         const wrap_messages = document.querySelector("#messages");
         if (data.client_id == client_id) {
-          toastr.success(data.message);
+          const { message = "", title = "", type = "success" } = data;
+          toastr[type](message, title);
         }
       });
     </script>

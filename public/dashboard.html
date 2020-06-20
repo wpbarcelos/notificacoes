@@ -30,7 +30,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     <script src="js/socket.io.js"></script>
     <script>
-      const dashboard = 23;
+      const dashboard = 123;
       const socket = io("http://localhost:3000");
 
       toastr.options = {
@@ -41,9 +41,7 @@
         const wrap_messages = document.querySelector("#messages");
         if (data.dashboard_id == dashboard) {
           const { message = "", title = "", type = "success" } = data;
-          toastr[type](message, title, {
-            progressbar: true,
-          });
+          toastr[type](message, title);
         }
       });
     </script>
