@@ -7,6 +7,8 @@ const path = require("path");
 const bodyParser = require("body-parser");
 const { urlencoded } = require("express");
 
+const secret_key = "minhasenha";
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -16,9 +18,25 @@ app.use((request, response, next) => {
   next();
 });
 
-app.post("/send", (request, response) => {
+function verifyToken(request, response, next) {
+  console.log(request.headers);
+  const authorization = request.headers["authorization"];
+
+  if (!!authorization) {
+    if (authorization.trim() != secret_key) {
+      return response.status(400).json({ message: "Invalid key" });
+    } else {
+      return next();
+    }
+  } else {
+    return response
+      .status(400)
+      .json({ message: "Headers Authorization is required" });
+  }
+}
+
+app.post("/send", verifyToken, (request, response) => {
   const data = request.body;
-  console.log("data", data);
   request.io.sockets.emit("message", data);
   return response.json({ message: "Mensagem Propagada" });
 });
