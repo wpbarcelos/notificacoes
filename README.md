@@ -5,9 +5,10 @@ Libs:
 - socket.io
 
 ## Como subir o serviço
-
-- npm install ou yarn install
-- node app.js
+````
+npm install ou yarn install
+node app.js
+````
 
 ## Como integrar
 
